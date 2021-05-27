@@ -23,8 +23,14 @@ public class ProductLookupEventsHandler {
 	
 	@EventHandler
 	public void on (ProductCreatedEvent productCreatedEvent) {
+		try {
 		ProductLookupEntity productLookupEntity = new ProductLookupEntity(productCreatedEvent.getProductId(),productCreatedEvent.getTitle());
 		productLookupRepository.save(productLookupEntity);
+		}
+		catch(IllegalArgumentException argumentException) {
+			System.out.println(argumentException.getMessage());
+		}
+		
 		
 	}
 

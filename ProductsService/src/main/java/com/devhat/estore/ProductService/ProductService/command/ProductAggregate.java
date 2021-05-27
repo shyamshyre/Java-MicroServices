@@ -26,7 +26,7 @@ public class ProductAggregate {
 	}
 	
 	@CommandHandler
-	public ProductAggregate(CreateProductCommand createProductCommand) {
+	public ProductAggregate(CreateProductCommand createProductCommand) throws Exception {
 		// Validate the Create Product Command.
 		if (createProductCommand.getPrice().compareTo(BigDecimal.ZERO) <=0) {
 			throw new IllegalArgumentException("Price cannot be less than or equal to zero");
@@ -43,6 +43,24 @@ public class ProductAggregate {
 		
 		AggregateLifecycle.apply(productcreatedEvent);
 		
+//		We are intentionally throwing the exception from command handler and segregating
+//		the handling from other exceptions.
+//		Exceptions that arise in the command handlers and Query handlers are to be
+//		treated in a separate way. 
+//		In a distributed system its always useful to segregate the command and query exceptions.  
+
+//		Even though the exception is raised after the apply method, still the event
+//		wont be persisted in the event store.When apply method is called axon framework 
+//		Doesn't immediately persist it. but only stages the event for execution. As the error 
+//		is thrown then the transaction will  rollback and none of the events will be processed.
+		
+//		When an exception is raised from the command handler/query handler , Axon Framework
+//		will robe them into Commandexecution or QueryExecution Exception.
+//		
+		if(true) {
+			throw new Exception("Everything turned to be succesfull");
+		}
+		
 	}
 	
 	@EventSourcingHandler
@@ -55,3 +73,5 @@ public class ProductAggregate {
 	}
 	
 }
+
+
