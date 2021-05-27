@@ -1,0 +1,71 @@
+Microservices with Spring-Boot.
+1) Create a new Spring starter Project, Name it as the Product Service
+    Add 2 dependencies.
+     1) Spring Web
+     2) lombok
+
+     Create Rest Controller with GET,PUT,DELETE Mappings
+
+ Configure the application.properties file as follows.
+ # PORT : Define the port no.     
+ server.port=9001
+ #Service-URL : Define the service-url
+ eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+ # SERVICE-NAME : Define the Service Name
+ spring.application.name=products-service
+
+
+2) Create a new Spring starter Project, Name it as the Discover Service / Registry
+    Add 1 dependencies.
+     1) EurekaServer
+    Perform following changes in the application.yaml file
+    # Confugure the port no of your choice
+    server.port=8761
+    # As this being the server, so the discovery mode should be disabled.
+    eureka.client.register-with-eureka=false
+    # We can even make the Discovery Server as the Discovery Client for other services.
+    # In that case we will be adding both server and client dependencies.
+    eureka.client.fetch-registry=false
+    # Specifies the way of detecting the host, either through ip or hostname
+    eureka.instance.prefer-ip-address=true
+    # Specifies the way of detecting the host, either through ip or hostname
+    #eureka.instance.hostname=
+    # Configuring the service url.
+    eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+
+3) As the appication are up and running we need a Gateway, to route the requests and load balance the requests.
+    Spring-CLOUD-API-Gateway. (Load Balancer)
+    This will be single point of entry of the system
+    We can implement custom filters
+     1) Logging
+     2) Validation
+     3) Routing
+
+Open application.properties
+spring.application.name=api-gateway
+server.port=9090
+eureka.client.service-url.defaultZone= http://localhost:8761/eureka
+
+# This property will make the service discovery feature. 
+spring.cloud.gateway.discovery.locator.enabled=true
+
+# Capital NAME is odd way to make the service calling by adding this will give us
+# to call the services registered using lower case.
+
+spring.cloud.gateway.discovery.locator.lower-case-service-id=true
+
+#***************************************************************************************
+
+#Random port number configuration, if we need to start more than one instance of it
+server.port=0
+spring.application.name=products-service
+
+# By adding 0 enables creating multiple instances, but in the discovery/registry it shows only one client ie recently started.
+# It doesnt show the number of instances started invidiually.
+# To solve that issue we need to configure below configuration that takes the application name,instance id with random value.
+# We can even generate isntance id automatically or even configuring through commandline argument.
+# Below case generating automatically. 
+
+eureka.instance.instance-id=${spring.application.name}:${instanceId:${random.value}}
+
+#***************************************************************************************

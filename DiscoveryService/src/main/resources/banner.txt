@@ -1,0 +1,10 @@
+--------------------------------------------------------------------------
+Application Name : ${spring.application.name}
+Application Version : ${application.version}
+Application Formatted Version : ${application.formatted-version}
+Spring Boot Version : ${spring-boot-version}
+Spring Boot Formatted Version : ${spring-boot.formatted-version}
+--------------------------------------------------------------------------
+${AnsiColor.BRIGHT_RED}	 Discover / Registry MicroService
+--------------------------------------------------------------------------
+
