@@ -48,13 +48,16 @@ public class ProductCommandController {
 		.quantity(createProductRestModel.getQuantity())
 		.title(createProductRestModel.getTitle())
 		.productId(UUID.randomUUID().toString()).build();
-		try {
-		 returnValue = commandGateway.sendAndWait(createProductCommand);
-		 logger.info(returnValue);
 		
-		}catch(Exception ex) {
-			returnValue = ex.getLocalizedMessage();
-		}
+		 returnValue = commandGateway.sendAndWait(createProductCommand);
+		 
+//		try {
+//		 returnValue = commandGateway.sendAndWait(createProductCommand);
+//		 logger.info(returnValue);
+//		
+//		}catch(Exception ex) {
+//			returnValue = ex.getLocalizedMessage();
+//		}
 		return returnValue;  
 	}
 	
