@@ -23,8 +23,8 @@ public class ProductServiceErrorHandler {
 	
 	// Handling all the exceptions from the command separately.
 	@ExceptionHandler(value= {CommandExecutionException.class})
-	public ResponseEntity<Object> handleOtherException(CommandExecutionException ex, WebRequest request){
-		ErrorMessage errorMessage = new ErrorMessage(new Date(), ex.getMessage());
+	public ResponseEntity<Object> handleOtherException(CommandExecutionException cex, WebRequest request){
+		ErrorMessage errorMessage = new ErrorMessage(new Date(), cex.getMessage());
 		return new ResponseEntity<>(errorMessage, new HttpHeaders(),HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	

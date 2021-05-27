@@ -2,6 +2,7 @@ package com.devhat.estore.ProductService.ProductService.query;
 
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
+import org.axonframework.messaging.interceptors.ExceptionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -21,6 +22,14 @@ public class ProductsEventsHandler {
 	private final ProductsRepository productsRepository;
 	public ProductsEventsHandler(ProductsRepository productsRepository) {
 		this.productsRepository = productsRepository;
+	}
+	
+	
+//	This message will handle only exception that are thrown in the Eventhandler class.
+//	It cannot handle exceptions that are thrown in the same class outside of the Eventhandlers.
+	@ExceptionHandler(resultType=IllegalArgumentException.class)
+	public void handle(IllegalArgumentException argumentException) {
+		
 	}
 	@EventHandler
 	public void on(ProductCreatedEvent event) {
