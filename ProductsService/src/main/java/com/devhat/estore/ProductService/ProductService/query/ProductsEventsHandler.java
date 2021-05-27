@@ -31,8 +31,16 @@ public class ProductsEventsHandler {
 	public void handle(IllegalArgumentException argumentException) {
 		
 	}
+	
+//	We are handling the below thrown exception and we are rethrowing it to the ProductServiceEventErrorHandler
+	
+	
+	@ExceptionHandler(resultType=Exception.class)
+	public void handle(Exception exception) throws Exception {
+		throw exception;
+	}
 	@EventHandler
-	public void on(ProductCreatedEvent event) {
+	public void on(ProductCreatedEvent event) throws Exception{
 		ProductEntity productEntity = new ProductEntity();
 		BeanUtils.copyProperties(event, productEntity);
 		try {
@@ -44,6 +52,9 @@ public class ProductsEventsHandler {
 			ex.printStackTrace();
 		}
 
+		if(true) {
+			throw new Exception("Everything turned to be succesfull");
+		}
 	}
 
 }

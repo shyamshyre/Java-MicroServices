@@ -18,6 +18,7 @@ public class ProductServiceEventErrorHandler implements ListenerInvocationErrorH
 	@Override
 	public void onError(Exception exception, EventMessage<?> event, EventMessageHandler eventHandler) throws Exception {
 		// TODO Auto-generated method stub
+		throw exception;
 
 	}
 

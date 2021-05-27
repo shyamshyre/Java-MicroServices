@@ -56,10 +56,12 @@ public class ProductAggregate {
 		
 //		When an exception is raised from the command handler/query handler , Axon Framework
 //		will robe them into Commandexecution or QueryExecution Exception.
-//		
-		if(true) {
-			throw new Exception("Everything turned to be succesfull");
-		}
+
+//commenting below line as i want to see how exception is handled in event handler		
+		
+//		if(true) {
+//			throw new Exception("Everything turned to be succesfull");
+//		}
 		
 	}
 	
