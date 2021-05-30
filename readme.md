@@ -97,6 +97,9 @@ Output:
 ### Saga LifeCycle.
 
 * @StartSaga Begining of the Saga LifeCycle.
+*association Property the Key.
+Saga manages seperation between multipleservices and it can handle multiple events , we need to tell axon frameowrk which instance of saga to use
+when an event is published, Axon framework will used the association property to find the neeed instance fo saga and let it handle the publisher.
 association property could be any property from the event which you are handling.
 Makesure that the event holds the property while it being dispatched earlier and before being handled at Saga.
 
@@ -119,5 +122,8 @@ public void handle2(Event evt)
 All the methods inside the Saga Event handler capture the events and then dispatch Commands to the next lifecycle of transaction.
 }
 
+Association can be done programtically  as well.
+1) associateWith(key,value);
+2) removeAssocationWith(key,Value)
 
 
