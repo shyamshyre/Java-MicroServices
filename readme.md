@@ -77,3 +77,30 @@ Output:
         "price": 900.00
     }
 ]
+
+
+### Saga LifeCycle.
+@StartSaga Begining of the Saga LifeCycle.
+association property could be any property from the event which you are handling.
+Makesure that the event holds the property while it being dispatched earlier and before being handled at Saga.
+@SagaEventHandler(associationProperty="")
+public void handle1(Event evt)
+{
+All the methods inside the Saga Event handler capture the events and then dispatch Commands to the next lifecycle of transaction.
+}
+
+@SagaEventHandler(associationProperty="")
+public void handle2(Event evt)
+{
+All the methods inside the Saga Event handler capture the events and then dispatch Commands to the next lifecycle of transaction.
+}
+
+@EndSage - Sagalifecycle Ends.
+@SagaEventHandler(associationProperty="")
+public void handle2(Event evt)
+{
+All the methods inside the Saga Event handler capture the events and then dispatch Commands to the next lifecycle of transaction.
+}
+
+
+
