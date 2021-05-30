@@ -48,7 +48,7 @@ public class ProductAggregate {
 	}
 	
 	@CommandHandler
-	public ProductAggregate(CreateProductCommand createProductCommand) {
+	public ProductAggregate(CreateProductCommand createProductCommand)  throws Exception {
 		LOGGER.info("Indide the ProductAggregate CommandHadler");
 		//Command validation - Validate CreateProductCommand
 		
@@ -56,6 +56,9 @@ public class ProductAggregate {
 //		This will copy all the properties till they match
 		BeanUtils.copyProperties(createProductCommand, productCreatedEvent);
 		AggregateLifecycle.apply(productCreatedEvent);
+		
+//		if(true) throw new Exception("An error took place int he Command Handler, it will not allow the flow further. even thought lifecycle is called");
+		
 	}
 
 

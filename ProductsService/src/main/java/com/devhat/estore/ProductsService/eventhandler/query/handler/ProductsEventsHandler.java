@@ -2,6 +2,7 @@ package com.devhat.estore.ProductsService.eventhandler.query.handler;
 
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
+import org.axonframework.messaging.interceptors.ExceptionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -27,13 +28,43 @@ public class ProductsEventsHandler {
 		this.productsRepository = productsRepository;
 	}
 	
+	
+	@ExceptionHandler(resultType = Exception.class)
+	public void handle(Exception exception) throws Exception {
+		throw exception;
+	// Either not handle exception or handle and throw it back to source.
+	}
+	
+	@ExceptionHandler(resultType = IllegalArgumentException.class)
+	public void handle(IllegalArgumentException argumentException) {
+		
+	}
+	
+	/**
+	 * Handling the Exceptions in the Event Handler Methods.
+	 * The above method will handle only internal exceptions raised within the class.
+	 * if all other exceptions are to be handled then we need to  handle separately.
+	 * Use ListenerInvocation Error handler to handle the exceptions externally from
+	 * all other Exception within the event handlers.
+	 * @param productCreatedEvent
+	 * @throws Exception 
+	 * 
+	 */
+	
+	
 	@EventHandler
-	public void on(ProductCreatedEvent productCreatedEvent) {
+	public void on(ProductCreatedEvent productCreatedEvent) throws Exception {
 		LOGGER.info("Inside Query-ProductCreatedEvent");
 		ProductEntity productEntity = new ProductEntity();
 		BeanUtils.copyProperties(productCreatedEvent, productEntity);
+		try {
 		productsRepository.save(productEntity);
+		}catch(IllegalArgumentException ex) {
+			ex.printStackTrace();
+		}
 		LOGGER.info("Inside Query-ProductCreatedEvent-> RecordSaved to ReadDatabase");
+		if(true) throw new Exception("Forcing exception in the Event Handler Class");
+		
 	}
 
 }
