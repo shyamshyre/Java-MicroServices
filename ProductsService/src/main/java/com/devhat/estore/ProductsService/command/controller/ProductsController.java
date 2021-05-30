@@ -48,16 +48,12 @@ public class ProductsController {
 		.productId(UUID.randomUUID().toString()).build();
 		//Return value in this is productID
 		String returnValue = null;
-		try {	
 		  returnValue= commandGateway.sendAndWait(createProductCommand);
 			// send will just send and doesnt block the execution.
 		 	// sendAandWait will block immediately until the immediate result is available.
 			// return "HTTP POST METHOD"+ "Running on SERVER PORT"+env.getProperty("local.server.port") ;
 			// return " HTTP POST METHOD" + "Title"+createProductRestModel.getTitle();
 
-		}catch(Exception ex) {
-			LOGGER.info(ex.getMessage());	
-		}
 		return returnValue;
 	}
 
