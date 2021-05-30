@@ -2,7 +2,6 @@ package com.devhat.estore.ProductsService;
 
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.config.EventProcessingConfigurer;
-import org.axonframework.eventhandling.PropagatingErrorHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
