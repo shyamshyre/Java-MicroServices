@@ -1,8 +1,27 @@
 # Spring - MicroServices-Axon Large Scale Application Distributed Transaction System.
 # Application State Management 
 
+We will discuss about following things.
 
-Architecture covers the following Application Flow.
+Loosely Coupled Architecture.
+Domain Driven model.
+Event Driven Architecture.
+CQRS Design Pattern.
+Application Management using CQRS.
+Axon Framework.
+
+Command Gateways.
+EventBus.
+Commands.
+Server Side Bean Validations.
+Command Interceptors.
+Command Aggregates.
+Command Handlers.
+Dispatching Events using AggreagateLifeCycle.
+EventSourceHandlers
+EventHandlers.
+
+
 ## Application Event Flow 
 ## Rest Controller --> CommandGateway - > Command Bus -> Message Interceptor -> Command Handler -> EventSourceHandler-> (Query) Event Handler -> Persistence.
 
