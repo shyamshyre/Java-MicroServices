@@ -1,8 +1,10 @@
 # Spring - MicroServices-Axon Large Scale Application Distributed Transaction System.
-# Application State Management 
+The biggest challenge in the database world is maintaing ATOMICITY luckily thanks to data base which has come up in solving the problem.
+But does this really solve the
 
-* We will discuss about following things.
 
+
+* Application State Management 
 * Loosely Coupled Architecture.
 * Domain Driven model.
 * Event Driven Architecture.
