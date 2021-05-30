@@ -1,8 +1,22 @@
 # Spring - MicroServices-Axon Large Scale Application Distributed Transaction System.
-The biggest challenge in the database world is maintaing ATOMICITY luckily thanks to data base which has come up in solving the problem.
-But does this really solve the
+The biggest challenge in the database world is maintaining ATOMICITY luckily thanks to database which has come up in solving the problem.
+But does this really solve the current today's problem where the data generation is humognous with limtiless adaption capability 
+of commodity hardware that turned to be chepaer. During the good old days Vertical scaling was the biggest feast, Still it has it own
+set of cons as the applicaions turned to commodites specific rather than application specific.
+I can say horizontal scaling is what created distruption and this will be the nearby future, but still it comes with own set of tradeoffs.
 
+On the brighter side.
+* Significant Cost Cutting.
+* Highly Scalable.
+* Resilience is the Key.
+* Rather than hardware specific , now solutions are application specific.
 
+On the lighter side.
+ * Challenges in managing multiple systems.
+ * Special Expertise.
+ * Managing ATOMICITY turns to be huge challenge.
+ 
+ Following are the few things which i would be discussing in this chapter.
 
 * Application State Management 
 * Loosely Coupled Architecture.
