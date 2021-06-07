@@ -11,10 +11,12 @@ import org.springframework.stereotype.Component;
 import com.devhat.estore.ProductsService.core.events.ProductCreatedEvent;
 import com.devhat.estore.ProductsService.entity.ProductEntity;
 import com.devhat.estore.ProductsService.repository.ProductsRepository;
+import com.devhat.estore.core.commands.ProductReservedEvent;
 
 /**
  * This class is aloso called as ProjectionClass 
  * @author shyam
+ * This class is updating the READ Database
  *
  */
 
@@ -63,8 +65,27 @@ public class ProductsEventsHandler {
 			ex.printStackTrace();
 		}
 		LOGGER.info("Inside Query-ProductCreatedEvent-> RecordSaved to ReadDatabase");
-		if(true) throw new Exception("Forcing exception in the Event Handler Class");
+//		if(true) throw new Exception("Forcing exception in the Event Handler Class");
 		
 	}
 
+	
+	/**
+	 * Updating the ReadDatabase upon receiving the product Reserved Event
+	 * @param productReservedEvent
+	 * @throws Exception
+	 */
+	@EventHandler
+	public void on(ProductReservedEvent productReservedEvent) throws Exception {
+		LOGGER.info("Inside Query-ProductCreatedEvent");
+		ProductEntity productEntity = productsRepository.findByProductId(productReservedEvent.getProductId());
+		productEntity.setQuantity(productEntity.getQuantity() - productReservedEvent.getQuantity());
+		try {
+			productsRepository.save(productEntity);
+			}catch(IllegalArgumentException ex) {
+				ex.printStackTrace();
+			}
+		
+	}
+	
 }

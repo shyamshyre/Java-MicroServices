@@ -31,7 +31,7 @@ public class CreateProductCommand {
 	// aggregate object in your application.
 	
 	private final String title;
-	private final int quantity;
+	private final Integer quantity;
 	private final BigDecimal price;
 
 }

@@ -16,10 +16,12 @@ import org.springframework.beans.BeanUtils;
 
 import com.devhat.estore.ProductsService.command.CreateProductCommand;
 import com.devhat.estore.ProductsService.core.events.ProductCreatedEvent;
+import com.devhat.estore.core.commands.ProductReservedEvent;
+import com.devhat.estore.core.commands.ReserveProductCommand;
 
 /**
  * @author shyam
- *Aggregate class holds the current state of the object it the heart of the Applciation.
+ *Aggregate class holds the current state of the object it the heart of the Application.
  *In addition to it it has methods to perform validations.
  *Aggregate holds following information.
  * 1) Product State.
@@ -34,14 +36,16 @@ import com.devhat.estore.ProductsService.core.events.ProductCreatedEvent;
 public class ProductAggregate {
 	
 	private final Logger LOGGER = LoggerFactory.getLogger(ProductAggregate.class);
-	@AggregateIdentifier
-	private  String productId;
+	
 	//Axon framework will use this identifier to associate this command with 
 	// aggregate object in your application.
-	
+
 	private  String title;
 	private  Integer quantity;
 	private  BigDecimal price;
+	@AggregateIdentifier
+	private  String productId;
+	
 	public ProductAggregate() {
 		
 		
@@ -62,17 +66,41 @@ public class ProductAggregate {
 	}
 
 
+	@CommandHandler
+	public ProductAggregate(ReserveProductCommand reserveProductCommand)  throws Exception {
+		LOGGER.info("Indide the ProductAggregate ReserveProductCommand");
+		//Command validation - Validate CreateProductCommand
+		if(quantity < reserveProductCommand.getQuantity()) {
+			throw new IllegalStateException("Insuffecient number of items in the Stock");
+		}
+		ProductReservedEvent productReservedEvent = ProductReservedEvent.builder()
+				.orderId(reserveProductCommand.getOrderId())
+				.productId(reserveProductCommand.getProductId())
+				.quantity(reserveProductCommand.getQuantity())
+				.userId(reserveProductCommand.getUserId()).build();
+		
+		AggregateLifecycle.apply(productReservedEvent);
+	}
+
 
 
 // This will aggregate the state with new information with the changes done in handler.
 @EventSourcingHandler
 public void on(ProductCreatedEvent productCreatedEvent) {
-	LOGGER.info("Indide the ProductAggregate ProductCreatedEvent ");
+	LOGGER.info("Inside the ProductAggregate ProductCreatedEvent ");
 //	Avoid using business logic, just update state.
 	this.productId =  productCreatedEvent.getProductId();
 	this.quantity = productCreatedEvent.getQuantity();
 	this.price =  productCreatedEvent.getPrice();
 	this.title = productCreatedEvent.getTitle();
+	
+}
+
+
+@EventSourcingHandler
+public void on(ProductReservedEvent  productReservedEvent) {
+	LOGGER.info("Inside the ProductAggregate productReservedEvent ");
+	this.quantity = this.quantity - productReservedEvent.getQuantity();
 	
 }
 
