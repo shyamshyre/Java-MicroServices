@@ -61,13 +61,13 @@ public class ProductAggregate {
 		BeanUtils.copyProperties(createProductCommand, productCreatedEvent);
 		AggregateLifecycle.apply(productCreatedEvent);
 		
-//		if(true) throw new Exception("An error took place int he Command Handler, it will not allow the flow further. even thought lifecycle is called");
+//		if(true) throw new Exception("An error took place in the Command Handler, it will not allow the flow further. even thought lifecycle is called");
 		
 	}
 
 
 	@CommandHandler
-	public ProductAggregate(ReserveProductCommand reserveProductCommand)  throws Exception {
+	public void reserveProductCommandHandler (ReserveProductCommand reserveProductCommand)  throws Exception {
 		LOGGER.info("Indide the ProductAggregate ReserveProductCommand");
 		//Command validation - Validate CreateProductCommand
 		if(quantity < reserveProductCommand.getQuantity()) {
@@ -87,7 +87,7 @@ public class ProductAggregate {
 // This will aggregate the state with new information with the changes done in handler.
 @EventSourcingHandler
 public void on(ProductCreatedEvent productCreatedEvent) {
-	LOGGER.info("Inside the ProductAggregate ProductCreatedEvent ");
+	LOGGER.info("Inside the ProductAggregate ProductCreatedEvent");
 //	Avoid using business logic, just update state.
 	this.productId =  productCreatedEvent.getProductId();
 	this.quantity = productCreatedEvent.getQuantity();
